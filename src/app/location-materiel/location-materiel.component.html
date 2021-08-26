@@ -1,0 +1,91 @@
+<h5>Demande de location materiels Authentico:</h5>
+
+<form [formGroup]="this.locationService.form">
+      <div class="form-group">
+        <label for="nomDemandeur">Date début de la journée</label>
+        <input
+              formControlName="dateDebut"
+              type="datetime-local"
+              class="form-control"/>
+      </div>
+      <div class="form-group">
+        <label for="dateFin">Date fin de la journée</label>
+        <input
+              formControlName="dateFin"
+              type="datetime-local"
+              class="form-control"/>
+      </div>
+    <div class="form-group">
+        <h5>Choisir les materiels à louer</h5>
+<mat-form-field appearance="fill">
+  <select class="form-select"  (change)="addMateriels($event.target.value)" aria-label="Default select example" matNativeControl>
+    <optgroup [label]="catEtMats.categorie.nom" *ngFor="let catEtMats of materielsEtCategories ">
+      <option *ngFor="let mat of catEtMats.materiels" >{{mat.nom}}</option>
+    </optgroup>
+  </select>
+</mat-form-field>
+      <!-- <label for="selectMateriel">Choisir les materiels à louer </label>
+      <select class="form-select"  (change)="addMateriels($event.target.value)" aria-label="Default select example">
+        <option value="0">--------</option>
+        <option *ngFor="let materiel of materiels">{{ materiel }}</option>
+      </select> -->
+    </div>
+
+ <!--    <button
+   class="waves-effect waves-light btn col s4"
+   *ngFor="let materiel of materiels"
+   (click)="addMateriels(materiel)">
+   {{ materiel }}
+</button> -->
+
+<!-- <ul class="collection"> <li *ngFor="let materiel of locationMateriels"> 
+    <span class="col s11"> {{ materiel }} 
+
+    </span ><a class="col s1" (click)="removeMateriel(materiel)">x</a> </li>
+</ul> -->
+<table class="table">
+  <thead>
+    <tr >
+      <th scope="col">nom</th>
+      <th scope="col">desciption</th>
+      <th scope="col">model</th>
+      <th scope="col">prix location</th>
+      <th scope="col">Quantité</th>
+      <th scope="col">Prix total</th>
+      <th>Suprimer</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="locationMateriels.length>0">
+    <tr *ngFor="let locationMateriel of locationMateriels">
+      <td>{{locationMateriel.materiels.nom}}</td>
+      <td>{{locationMateriel.materiels.description}}</td>
+      <td>{{locationMateriel.materiels.model}}</td>
+      <td>{{locationMateriel.materiels.prixLocation}} FCFA</td>
+      <td>
+        <input type="number" formControlName="qteTotalsMatLoc" [(ngModel)]="locationMateriel.qte" >
+      </td>
+      <td>
+        <span ></span>
+        <input type="number" [(ngModel)]="locationMateriel.prixTotal"  
+              value="{{locationMateriel.qte*locationMateriel.materiels.prixLocation}}" disabled="disabled">
+      </td>
+      <td><a class="col s1" (click)="removeMateriel(locationMateriel)">x</a></td>
+      
+    </tr>
+  </tbody>
+</table>
+<button class="waves-effect waves-light btn col s12" (click)="onSubmit()">
+  LOYER
+</button>
+   
+  </form>
+
+
+
+
+
+
+
+
+
+
